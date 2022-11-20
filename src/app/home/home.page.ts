@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { AddNewTaskPage } from './../add-new-task/add-new-task.page';
 
 @Component({
   selector: 'app-home',
@@ -6,34 +8,54 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  todoList = [
+  // Para testes com dados estáticos
+  /* todoList = [
     {
-      itemName: 'Programar',
-      itemDueDate: '11/25/2022',
-      itemPriority: 'High',
-      itemCategory: 'Work',
+      nomeItem: 'Programar',
+      vencimentoItem: '11/25/2022',
+      prioridadeItem: 'High',
+      categoriaItem: 'Trabalho',
     },
     {
-      itemName: 'Desenhar app',
-      itemDueDate: '11/28/2022',
-      itemPriority: 'Low',
-      itemCategory: 'Work',
+      nomeItem: 'Desenhar app',
+      vencimentoItem: '11/28/2022',
+      prioridadeItem: 'Low',
+      categoriaItem: 'Trabalho',
     },
     {
-      itemName: 'Comprar hardware',
-      itemDueDate: '11/30/2022',
-      itemPriority: 'Middle',
-      itemCategory: 'Personal',
+      nomeItem: 'Comprar hardware',
+      vencimentoItem: '11/30/2022',
+      prioridadeItem: 'Middle',
+      categoriaItem: 'Pessoal',
     },
     {
-      itemName: 'Treinar',
-      itemDueDate: '12/01/2022',
-      itemPriority: 'High',
-      itemCategory: 'Personal',
+      nomeItem: 'Treinar',
+      vencimentoItem: '12/01/2022',
+      prioridadeItem: 'High',
+      categoriaItem: 'Pessoal',
     },
-  ];
+  ]; */
+
+  todoList = [];
 
   today: number = Date.now();
 
-  constructor() {}
+  constructor(public modalCtrl: ModalController) {}
+
+  async adicionarTarefa() {
+    const modal = await this.modalCtrl.create({
+      component: AddNewTaskPage,
+    });
+
+    modal.onDidDismiss().then((novoObjetoTarefa) => {
+      console.log(novoObjetoTarefa.data);
+      this.todoList.push(novoObjetoTarefa.data);
+    });
+
+    return await modal.present();
+  }
+
+  delete(index) {
+    this.todoList.splice(index, 1);
+  }
 }

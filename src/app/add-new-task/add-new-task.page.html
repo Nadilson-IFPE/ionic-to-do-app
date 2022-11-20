@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Adicionar Nova Tarefa</ion-title>
+    <ion-icon
+      name="close"
+      slot="end"
+      size="large"
+      class="ion-padding"
+      (click)="dismiss()"
+    ></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-textarea
+        [(ngModel)]="nomeTarefa"
+        placeholder="Descreva sua tarefa aqui"
+      ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Prioridade</ion-label>
+      <ion-select [(ngModel)]="prioridadeTarefa">
+        <ion-select-option value="Low">Baixa</ion-select-option>
+        <ion-select-option value="Middle">Média</ion-select-option>
+        <ion-select-option value="High">Alta</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="calendar-outline" slot="start"></ion-icon>
+      <ion-label>Vencimento</ion-label>
+      <ion-datetime
+        [(ngModel)]="dataTarefa"
+        displayFormat="D MMM YYYY H:mm"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+      <ion-label>Categoria</ion-label>
+      <span>{{ categoriaTarefa }}</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-chip
+        *ngFor="let categoria of categorias; let i = index"
+        (click)="categoriaSelecionada(i)"
+      >
+        <ion-label>{{ categoria }}</ion-label>
+      </ion-chip>
+    </ion-item>
+
+    <ion-button class="ion-margin" expand="block" (click)="adicionarTarefa()">
+      Adicionar Tarefa
+    </ion-button>
+  </ion-card>
+</ion-content>
