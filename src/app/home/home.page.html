@@ -15,56 +15,57 @@
   <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
     <ion-card-header>
       <ion-card-subtitle
-        [style.color]="item.prioridadeItem === 'High' ? 'red' : (item.prioridadeItem === 'Low' ? 'green' : 'orange')"
+        [style.color]="item.value.prioridadeItem === 'High' ? 'red' : (item.value.prioridadeItem === 'Low' ? 'green' : 'orange')"
       >
-        {{ item.categoriaItem }}
+        {{ item.value.categoriaItem }}
       </ion-card-subtitle>
       <ion-item>
         <ion-icon
-          *ngIf="item.prioridadeItem === 'High' "
+          *ngIf="item.value.prioridadeItem === 'High' "
           color="danger"
           size="small"
           name="ellipse"
         >
         </ion-icon>
         <ion-icon
-          *ngIf="item.prioridadeItem === 'Middle' "
+          *ngIf="item.value.prioridadeItem === 'Middle' "
           color="warning"
           size="small"
           name="ellipse"
         >
         </ion-icon>
         <ion-icon
-          *ngIf="item.prioridadeItem === 'Low' "
+          *ngIf="item.value.prioridadeItem === 'Low' "
           color="success"
           size="small"
           name="ellipse"
         >
         </ion-icon>
-        <ion-label>{{ item.nomeItem }}</ion-label>
+        <ion-label>{{ item.value.nomeItem }}</ion-label>
       </ion-item>
     </ion-card-header>
 
     <ion-card-content>
       <ion-label>
-        Vencimento: {{ item.vencimentoItem | date:'fullDate' | titlecase }}
+        Vencimento: {{ item.value.vencimentoItem | date:'fullDate' | titlecase
+        }}
       </ion-label>
     </ion-card-content>
 
     <ion-row>
-      <ion-item>
-        <ion-icon name="share-outline"> </ion-icon>
+      <!-- <ion-item>
+        <ion-icon name="time-outline"> </ion-icon>
         <p>Compartilhar</p>
+      </ion-item> -->
+
+      <ion-item button (click)="atualizar(item)">
+        <ion-icon name="create-outline"> </ion-icon>
+        <p>Atualizar</p>
       </ion-item>
 
-      <ion-item>
-        <ion-icon name="checkmark-outline"> </ion-icon>
-        <p>Finalizar</p>
-      </ion-item>
-
-      <ion-item button (click)="delete(i)">
+      <ion-item button (click)="delete(item.key)">
         <ion-icon name="trash-outline"> </ion-icon>
-        <p>Cancelar</p>
+        <p>Apagar</p>
       </ion-item>
     </ion-row>
   </ion-card>

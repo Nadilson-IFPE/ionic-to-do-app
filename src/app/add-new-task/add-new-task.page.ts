@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { MyToDoService } from './../my-to-do.service';
 
 @Component({
   selector: 'app-add-new-task',
@@ -7,33 +8,50 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./add-new-task.page.scss'],
 })
 export class AddNewTaskPage implements OnInit {
-  categorias = ['trabalho', 'pessoal', 'lar'];
+  categorias = [];
+  atualCategoriaSelecionada;
 
   nomeTarefa;
   dataTarefa;
   prioridadeTarefa;
   categoriaTarefa;
-  objetoTarefa;
 
-  constructor(public modalCtrl: ModalController) {}
+  novoObjetoTarefa = {};
 
-  ngOnInit() {}
+  constructor(
+    public modalCtrl: ModalController,
+    public myToDoService: MyToDoService
+  ) {}
+
+  ngOnInit() {
+    this.categorias.push('trabalho');
+    this.categorias.push('pessoal');
+  }
 
   async dismiss() {
-    await this.modalCtrl.dismiss(this.objetoTarefa);
+    await this.modalCtrl.dismiss(this.novoObjetoTarefa);
   }
 
-  categoriaSelecionada(index) {
-    this.categoriaTarefa = this.categorias[index];
+  selecionarCategoria(index) {
+    this.atualCategoriaSelecionada = this.categorias[index];
   }
 
-  adicionarTarefa() {
-    this.objetoTarefa = {
+  async adicionarTarefa() {
+    this.novoObjetoTarefa = {
       nomeItem: this.nomeTarefa,
       vencimentoItem: this.dataTarefa,
       prioridadeItem: this.prioridadeTarefa,
-      categoriaItem: this.categoriaTarefa,
+      categoriaItem: this.atualCategoriaSelecionada,
     };
+
+    const uid = this.nomeTarefa + this.dataTarefa;
+
+    if (uid) {
+      await this.myToDoService.adicionarTarefa(uid, this.novoObjetoTarefa);
+    } else {
+      console.log('Não é possível salvar tarefas em branco!');
+    }
+
     this.dismiss();
   }
 }

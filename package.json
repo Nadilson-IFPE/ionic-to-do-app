@@ -21,6 +21,7 @@
     "@angular/router": "^14.0.0",
     "@capacitor/core": "4.4.0",
     "@ionic/angular": "^6.1.9",
+    "@ionic/storage-angular": "^3.0.6",
     "ionicons": "^6.0.3",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
